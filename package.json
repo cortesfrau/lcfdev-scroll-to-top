@@ -1,0 +1,24 @@
+{
+  "name": "wp-scroll-to-top",
+  "version": "1.0.0",
+  "description": "Adds a button that scrolls the page back to the top.",
+  "author": {
+    "name": "Lluis Cortes",
+    "url": "https://github.com/cortesfrau"
+  },
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://github.com/cortesfrau/wp-scroll-to-top",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cortesfrau/wp-scroll-to-top.git"
+  },
+  "private": false,
+  "scripts": {
+    "dev": "vite",
+    "watch": "vite build --watch",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^8.3.0"
+  }
+}

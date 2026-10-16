@@ -1,0 +1,21 @@
+name: Build and release plugin
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+  packages: read
+
+jobs:
+  release:
+    uses: cortesfrau/github-workflows/.github/workflows/wp-release.yml@main
+    with:
+      has_composer: true
+      has_package_json: true
+      php_version: "8.4"
+      exclude: |
+        resources/
+    secrets: inherit

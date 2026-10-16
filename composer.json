@@ -1,0 +1,25 @@
+{
+    "name": "cortesfrau/wp-scroll-to-top",
+    "description": "Adds a button that scrolls the page back to the top.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Lluis Cortes",
+            "homepage": "https://github.com/cortesfrau"
+        }
+    ],
+    "homepage": "https://github.com/cortesfrau/wp-scroll-to-top",
+    "require": {
+        "php": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LcfDev\\WpScrollToTop\\": "src/"
+        }
+    },
+    "config": {
+        "autoloader-suffix": "LcfDevWpScrollToTop",
+        "sort-packages": true
+    }
+}
