@@ -30,8 +30,9 @@ Open **Settings → Scroll to Top** to change:
 
 - **Background color**, the button background
 - **Icon color**, the chevron
+- **Distance from the right** and **distance from the bottom**, in pixels
 
-Both colors are stored in the `lcfdev_scroll_to_top` option. If they have not been saved yet, the button uses black and white.
+These values are stored in the `lcfdev_scroll_to_top` option. If they have not been saved yet, the button uses black, white, and a 24 px offset from each edge.
 
 ## Development
 

@@ -1,7 +1,7 @@
 #lcfdev-scroll-to-top {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
+    right: var(--lcfdev-scroll-to-top-right, 24px);
+    bottom: var(--lcfdev-scroll-to-top-bottom, 24px);
     z-index: 1000;
     opacity: 0;
     visibility: hidden;

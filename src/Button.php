@@ -13,7 +13,7 @@ final class Button
 
     public function render(): void
     {
-        $colors = Settings::colors();
+        $settings = Settings::values();
 
         printf(
             '<div id="lcfdev-scroll-to-top" style="%1$s">
@@ -22,9 +22,11 @@ final class Button
                 </button>
             </div>',
             esc_attr(sprintf(
-                '--lcfdev-scroll-to-top-background:%s;--lcfdev-scroll-to-top-icon:%s;',
-                $colors['background_color'],
-                $colors['icon_color']
+                '--lcfdev-scroll-to-top-background:%1$s;--lcfdev-scroll-to-top-icon:%2$s;--lcfdev-scroll-to-top-right:%3$dpx;--lcfdev-scroll-to-top-bottom:%4$dpx;',
+                $settings['background_color'],
+                $settings['icon_color'],
+                $settings['offset_right'],
+                $settings['offset_bottom']
             )),
             esc_attr__('Scroll to top', 'lcfdev-scroll-to-top')
         );

@@ -12,7 +12,9 @@ final class Settings
 
     private const GROUP = 'lcfdev-scroll-to-top';
 
-    private const SECTION = 'lcfdev_scroll_to_top_colors';
+    private const COLORS_SECTION = 'lcfdev_scroll_to_top_colors';
+
+    private const POSITION_SECTION = 'lcfdev_scroll_to_top_position';
 
     public function register(): void
     {
@@ -41,19 +43,34 @@ final class Settings
         ]);
 
         add_settings_section(
-            self::SECTION,
+            self::COLORS_SECTION,
             __('Colors', 'lcfdev-scroll-to-top'),
-            [$this, 'renderSection'],
+            [$this, 'renderColorsSection'],
             self::PAGE
         );
 
         $this->addColorField('background_color', __('Background color', 'lcfdev-scroll-to-top'));
         $this->addColorField('icon_color', __('Icon color', 'lcfdev-scroll-to-top'));
+
+        add_settings_section(
+            self::POSITION_SECTION,
+            __('Position', 'lcfdev-scroll-to-top'),
+            [$this, 'renderPositionSection'],
+            self::PAGE
+        );
+
+        $this->addOffsetField('offset_right', __('Distance from the right', 'lcfdev-scroll-to-top'));
+        $this->addOffsetField('offset_bottom', __('Distance from the bottom', 'lcfdev-scroll-to-top'));
     }
 
-    public function renderSection(): void
+    public function renderColorsSection(): void
     {
         echo '<p>' . esc_html__('Choose the colors of the scroll to top button.', 'lcfdev-scroll-to-top') . '</p>';
+    }
+
+    public function renderPositionSection(): void
+    {
+        echo '<p>' . esc_html__('Set the distance from the right and bottom edges of the screen.', 'lcfdev-scroll-to-top') . '</p>';
     }
 
     /**
@@ -62,7 +79,7 @@ final class Settings
     public function renderColorField(array $args): void
     {
         $key = $args['key'];
-        $value = self::colors()[$key];
+        $value = self::values()[$key];
 
         printf(
             '<input type="text" class="lcfdev-scroll-to-top-color" id="%1$s" name="%2$s[%1$s]" value="%3$s" data-default-color="%4$s">',
@@ -92,7 +109,7 @@ final class Settings
 
     /**
      * @param mixed $input
-     * @return array{background_color: string, icon_color: string}
+     * @return array{background_color: string, icon_color: string, offset_right: int, offset_bottom: int}
      */
     public function sanitize($input): array
     {
@@ -102,6 +119,8 @@ final class Settings
         return [
             'background_color' => $this->color($input['background_color'] ?? null, $defaults['background_color']),
             'icon_color' => $this->color($input['icon_color'] ?? null, $defaults['icon_color']),
+            'offset_right' => $this->offset($input['offset_right'] ?? null, $defaults['offset_right']),
+            'offset_bottom' => $this->offset($input['offset_bottom'] ?? null, $defaults['offset_bottom']),
         ];
     }
 
@@ -120,13 +139,15 @@ final class Settings
     }
 
     /**
-     * @return array{background_color: string, icon_color: string}
+     * @return array{background_color: string, icon_color: string, offset_right: int, offset_bottom: int}
      */
     public static function defaults(): array
     {
         return [
             'background_color' => '#000000',
             'icon_color' => '#ffffff',
+            'offset_right' => 24,
+            'offset_bottom' => 24,
         ];
     }
 
@@ -137,7 +158,21 @@ final class Settings
             $label,
             [$this, 'renderColorField'],
             self::PAGE,
-            self::SECTION,
+            self::COLORS_SECTION,
+            [
+                'key' => $key,
+            ]
+        );
+    }
+
+    private function addOffsetField(string $key, string $label): void
+    {
+        add_settings_field(
+            $key,
+            $label,
+            [$this, 'renderOffsetField'],
+            self::PAGE,
+            self::POSITION_SECTION,
             [
                 'key' => $key,
             ]
@@ -145,9 +180,26 @@ final class Settings
     }
 
     /**
-     * @return array{background_color: string, icon_color: string}
+     * @param array{key: string} $args
      */
-    public static function colors(): array
+    public function renderOffsetField(array $args): void
+    {
+        $key = $args['key'];
+        $value = self::values()[$key];
+
+        printf(
+            '<input type="number" id="%1$s" name="%2$s[%1$s]" value="%3$d" min="0" step="1" class="small-text"> %4$s',
+            esc_attr($key),
+            esc_attr(self::OPTION),
+            $value,
+            esc_html__('px', 'lcfdev-scroll-to-top')
+        );
+    }
+
+    /**
+     * @return array{background_color: string, icon_color: string, offset_right: int, offset_bottom: int}
+     */
+    public static function values(): array
     {
         $stored = get_option(self::OPTION, self::defaults());
 
@@ -163,5 +215,18 @@ final class Settings
         $sanitized = sanitize_hex_color($value);
 
         return is_string($sanitized) && $sanitized !== '' ? $sanitized : $fallback;
+    }
+
+    private function offset(mixed $value, int $fallback): int
+    {
+        if (is_int($value)) {
+            return $value >= 0 ? $value : $fallback;
+        }
+
+        if (is_string($value) && preg_match('/^\d+$/', $value) === 1) {
+            return (int) $value;
+        }
+
+        return $fallback;
     }
 }

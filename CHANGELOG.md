@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-10-16
+
+### Added
+
+- Settings to set the button distance from the right and bottom edges of the screen.
+
+---
+
 ## [1.0.0] - 2026-10-16
 
 ### Added
