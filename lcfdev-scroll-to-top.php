@@ -4,7 +4,7 @@
  * Plugin Name:       Scroll to Top
  * Plugin URI:        https://github.com/cortesfrau/wp-scroll-to-top
  * Description:       Adds a button that scrolls the page back to the top.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            Lluis Cortes
