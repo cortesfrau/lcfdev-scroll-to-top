@@ -98,7 +98,6 @@ final class Settings
 
         echo '<div class="wrap">';
         echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
-        settings_errors();
         echo '<form action="options.php" method="post">';
         settings_fields(self::GROUP);
         do_settings_sections(self::PAGE);
