@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [1.2.0] - 2026-11-10
+
 ### Changed
 
 - Releases use `cortesfrau/github-workflows` `wp-release.yml@v4` instead of `@main`. What the zip leaves out is listed in `.distignore` (from the v4 template, plus `/resources/`), and Node.js comes from `.nvmrc`.
