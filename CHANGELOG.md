@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- The button CSS is printed inline in the `<head>` (`wp_add_inline_style`) instead of linked as a file, which saves a render-blocking request.
+- The script loads with `defer` (WordPress 6.3+). Older versions still load it in the footer.
+
 ---
 
 ## [1.1.1] - 2026-10-19
