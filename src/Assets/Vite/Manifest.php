@@ -26,18 +26,18 @@ final class Manifest
             return null;
         }
 
-        $cssUrls = [];
+        $cssPaths = [];
         if (isset($data['css']) && is_array($data['css'])) {
             foreach ($data['css'] as $css) {
                 if (is_string($css) && $css !== '') {
-                    $cssUrls[] = $this->url($css);
+                    $cssPaths[] = $this->path($css);
                 }
             }
         }
 
         return new Entry(
             jsUrl: $this->url($file),
-            cssUrls: $cssUrls,
+            cssPaths: $cssPaths,
         );
     }
 
@@ -69,6 +69,11 @@ final class Manifest
         $this->entries = $decoded;
 
         return $this->entries;
+    }
+
+    private function path(string $relative): string
+    {
+        return LCFDEV_SCROLL_TO_TOP_PATH . 'dist/' . ltrim($relative, '/');
     }
 
     private function url(string $relative): string

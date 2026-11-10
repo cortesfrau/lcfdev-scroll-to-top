@@ -31,10 +31,24 @@ final class Enqueue
             return;
         }
 
-        foreach ($resolved->cssUrls as $index => $cssUrl) {
-            wp_enqueue_style(self::HANDLE . '-' . $index, $cssUrl, [], null);
+        // The CSS is a few hundred bytes for a button that starts hidden: printed inline it
+        // saves a render-blocking request in the <head>.
+        foreach ($resolved->cssPaths as $index => $cssPath) {
+            $css = is_readable($cssPath) ? file_get_contents($cssPath) : false;
+            if ($css === false || $css === '') {
+                continue;
+            }
+
+            $handle = self::HANDLE . '-' . $index;
+            wp_register_style($handle, false, [], null);
+            wp_enqueue_style($handle);
+            wp_add_inline_style($handle, $css);
         }
 
-        wp_enqueue_script(self::HANDLE, $resolved->jsUrl, [], null, true);
+        // Before WordPress 6.3 the strategy is ignored and the array only means "in the footer".
+        wp_enqueue_script(self::HANDLE, $resolved->jsUrl, [], null, [
+            'in_footer' => true,
+            'strategy'  => 'defer',
+        ]);
     }
 }
