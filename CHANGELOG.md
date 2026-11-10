@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Releases use `cortesfrau/github-workflows` `wp-release.yml@v4` instead of `@main`. What the zip leaves out is listed in `.distignore` (from the v4 template, plus `/resources/`), and Node.js comes from `.nvmrc`.
 - The button CSS is printed inline in the `<head>` (`wp_add_inline_style`) instead of linked as a file, which saves a render-blocking request.
 - The script loads with `defer` (WordPress 6.3+). Older versions still load it in the footer.
 

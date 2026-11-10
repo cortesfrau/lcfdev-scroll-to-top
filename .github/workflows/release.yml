@@ -7,15 +7,8 @@ on:
 
 permissions:
   contents: write
-  packages: read
 
 jobs:
   release:
-    uses: cortesfrau/github-workflows/.github/workflows/wp-release.yml@main
-    with:
-      has_composer: true
-      has_package_json: true
-      php_version: "8.4"
-      exclude: |
-        resources/
+    uses: cortesfrau/github-workflows/.github/workflows/wp-release.yml@v4
     secrets: inherit
